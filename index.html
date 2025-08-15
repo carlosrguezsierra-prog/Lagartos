@@ -768,4 +768,415 @@ main {
 }
 
 .coach-quote {
-    background: rgba(
+    background: rgba(76, 175, 80, 0.1);
+    border-left: 5px solid #4CAF50;
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 0 15px 15px 0;
+    font-style: italic;
+}
+
+.coach-quote cite {
+    display: block;
+    margin-top: 1rem;
+    text-align: right;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.next-match {
+    background: rgba(76, 175, 80, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid rgba(76, 175, 80, 0.3);
+    margin: 2rem 0;
+}
+
+.ticket-link {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid #4CAF50;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.ticket-link:hover {
+    background: #4CAF50;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.social-share {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.social-share p:last-child {
+    font-family: monospace;
+    background: rgba(76, 175, 80, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    color: #4CAF50;
+}
+
+/* Footer */
+footer {
+    background: rgba(0, 0, 0, 0.9);
+    text-align: center;
+    padding: 2rem;
+    border-top: 3px solid #4CAF50;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: 1rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form {
+        padding: 2rem;
+        margin: 0 1rem;
+    }
+
+    .contact-info {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .section {
+        padding: 3rem 0;
+    }
+
+    .section h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .contact-form {
+        padding: 1.5rem;
+    }
+}
+// Función para cambiar entre páginas
+function showPage(page) {
+    // Ocultar todas las páginas
+    document.getElementById('home-page').style.display = 'none';
+    document.getElementById('contact-page').style.display = 'none';
+    document.getElementById('news-page').style.display = 'none';
+    
+    // Quitar clase active de todos los enlaces
+    document.getElementById('home-link').classList.remove('active');
+    document.getElementById('contact-link').classList.remove('active');
+    document.getElementById('news-link').classList.remove('active');
+    
+    // Mostrar la página seleccionada y activar el enlace
+    if (page === 'home') {
+        document.getElementById('home-page').style.display = 'block';
+        document.getElementById('home-link').classList.add('active');
+    } else if (page === 'contact') {
+        document.getElementById('contact-page').style.display = 'block';
+        document.getElementById('contact-link').classList.add('active');
+    } else if (page === 'news') {
+        document.getElementById('news-page').style.display = 'block';
+        document.getElementById('news-link').classList.add('active');
+    }
+    
+    // Scroll hacia arriba
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Función para manejar animaciones al hacer scroll
+function handleScroll() {
+    const elements = document.querySelectorAll('.fade-in');
+    elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }
+    });
+}
+
+// Función para inicializar las animaciones
+function initAnimations() {
+    document.querySelectorAll('.fade-in').forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'all 0.8s ease-out';
+    });
+}
+
+// Función para validar el formulario
+function validateForm(formData) {
+    const errors = [];
+    
+    // Validar nombre
+    if (!formData.name || formData.name.trim().length < 2) {
+        errors.push('El nombre debe tener al menos 2 caracteres.');
+    }
+    
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email || !emailRegex.test(formData.email)) {
+        errors.push('Por favor, introduce un email válido.');
+    }
+    
+    // Validar edad
+    if (formData.age && (formData.age < 5 || formData.age > 99)) {
+        errors.push('La edad debe estar entre 5 y 99 años.');
+    }
+    
+    // Validar mensaje
+    if (!formData.message || formData.message.trim().length < 10) {
+        errors.push('El mensaje debe tener al menos 10 caracteres.');
+    }
+    
+    return errors;
+}
+
+// Función para mostrar mensajes de error
+function showErrors(errors) {
+    const errorContainer = document.createElement('div');
+    errorContainer.className = 'error-messages';
+    errorContainer.style.cssText = `
+        background: rgba(255, 0, 0, 0.1);
+        border: 2px solid #ff4444;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        color: #ff4444;
+    `;
+    
+    const errorList = document.createElement('ul');
+    errorList.style.cssText = 'margin: 0; padding-left: 1.5rem;';
+    
+    errors.forEach(error => {
+        const errorItem = document.createElement('li');
+        errorItem.textContent = error;
+        errorList.appendChild(errorItem);
+    });
+    
+    errorContainer.appendChild(errorList);
+    
+    // Insertar antes del formulario
+    const form = document.querySelector('.contact-form');
+    form.insertBefore(errorContainer, form.firstChild);
+    
+    // Eliminar mensaje de error después de 5 segundos
+    setTimeout(() => {
+        if (errorContainer.parentNode) {
+            errorContainer.parentNode.removeChild(errorContainer);
+        }
+    }, 5000);
+}
+
+// Función para mostrar mensaje de éxito
+function showSuccessMessage() {
+    const successContainer = document.createElement('div');
+    successContainer.className = 'success-message';
+    successContainer.style.cssText = `
+        background: rgba(76, 175, 80, 0.1);
+        border: 2px solid #4CAF50;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        color: #4CAF50;
+        text-align: center;
+        font-weight: bold;
+    `;
+    
+    successContainer.innerHTML = `
+        <p>🦎 ¡Gracias por tu mensaje!</p>
+        <p>Nos pondremos en contacto contigo pronto para hablar sobre tu incorporación a Lagartos FC.</p>
+    `;
+    
+    // Insertar antes del formulario
+    const form = document.querySelector('.contact-form');
+    form.insertBefore(successContainer, form.firstChild);
+    
+    // Eliminar mensaje después de 7 segundos
+    setTimeout(() => {
+        if (successContainer.parentNode) {
+            successContainer.parentNode.removeChild(successContainer);
+        }
+    }, 7000);
+}
+
+// Event listeners cuando el DOM está cargado
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar animaciones
+    initAnimations();
+    
+    // Ejecutar animaciones al cargar
+    handleScroll();
+    
+    // Manejar el envío del formulario
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Limpiar mensajes anteriores
+            const existingMessages = document.querySelectorAll('.error-messages, .success-message');
+            existingMessages.forEach(msg => msg.remove());
+            
+            // Obtener datos del formulario
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Validar formulario
+            const errors = validateForm(data);
+            
+            if (errors.length > 0) {
+                showErrors(errors);
+                return;
+            }
+            
+            // Simular envío exitoso
+            showSuccessMessage();
+            
+            // Limpiar formulario
+            this.reset();
+            
+            // Scroll suave hacia arriba del formulario
+            contactForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    }
+    
+    // Animaciones suaves para los inputs
+    const inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.style.transform = 'scale(1.02)';
+            this.style.boxShadow = '0 0 15px rgba(76, 175, 80, 0.3)';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = 'none';
+        });
+    });
+    
+    // Efecto parallax suave en el hero
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            hero.style.transform = `translateY(${rate}px)`;
+        });
+    }
+    
+    // Contador animado (opcional - para futuras mejoras)
+    function animateCounter(element, target, duration = 2000) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        
+        function updateCounter() {
+            start += increment;
+            if (start < target) {
+                element.textContent = Math.floor(start);
+                requestAnimationFrame(updateCounter);
+            } else {
+                element.textContent = target;
+            }
+        }
+        
+        updateCounter();
+    }
+});
+
+// Event listener para scroll
+window.addEventListener('scroll', handleScroll);
+
+// Función para navegación suave
+function smoothScroll(target) {
+    document.querySelector(target).scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
+// Prevenir comportamiento por defecto de enlaces vacíos
+document.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
+        e.preventDefault();
+    }
+});
+
+// Función para detectar dispositivos móviles
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+
+// Ajustar navegación en móviles
+window.addEventListener('resize', function() {
+    if (isMobile()) {
+        // Ajustes adicionales para móviles si es necesario
+        const nav = document.querySelector('nav');
+        if (nav) {
+            nav.style.flexDirection = 'column';
+        }
+    }
+});
